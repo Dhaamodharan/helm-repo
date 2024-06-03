@@ -1,0 +1,14 @@
+appName: chatterbox
+
+port: 80
+
+namespace: chatterbox
+
+configmap:
+  name: chatterbox-configmap
+  data:
+    CUSTOM_HEADER: 'This app was deployed with helm!'
+
+image:
+  name: nginx
+  tag: latest
