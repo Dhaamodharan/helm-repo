@@ -1,6 +1,7 @@
 appName: chatterbox
 
-port: 80
+service: 
+  port: 80
 
 namespace: chatterbox
 
