@@ -1,0 +1,44 @@
+Unable to create application: application spec for chatter is invalid: InvalidSpecError: Unable to generate manifests in chatterbox: rpc error: code = Unknown desc = `helm template . --name-template chatter --namespace chatterbox --kube-version 1.29 --values .chatterbox/values.yaml --api-versions admissionregistration.k8s.io/v1 --api-versions admissionregistration.k8s.io/v1/MutatingWebhookConfiguration --api-versions admissionregistration.k8s.io/v1/ValidatingWebhookConfiguration --api-versions apiextensions.k8s.io/v1 --api-versions apiextensions.k8s.io/v1/CustomResourceDefinition --api-versions apiregistration.k8s.io/v1 --api-versions apiregistration.k8s.io/v1/APIService --api-versions apps/v1 --api-versions apps/v1/ControllerRevision --api-versions apps/v1/DaemonSet --api-versions apps/v1/Deployment --api-versions apps/v1/ReplicaSet --api-versions apps/v1/StatefulSet --api-versions argoproj.io/v1alpha1 --api-versions argoproj.io/v1alpha1/AppProject --api-versions argoproj.io/v1alpha1/Application --api-versions argoproj.io/v1alpha1/ApplicationSet --api-versions autoscaling/v1 --api-versions autoscaling/v1/HorizontalPodAutoscaler --api-versions autoscaling/v2 --api-versions autoscaling/v2/HorizontalPodAutoscaler --api-versions batch/v1 --api-versions batch/v1/CronJob --api-versions batch/v1/Job --api-versions certificates.k8s.io/v1 --api-versions certificates.k8s.io/v1/CertificateSigningRequest --api-versions coordination.k8s.io/v1 --api-versions coordination.k8s.io/v1/Lease --api-versions discovery.k8s.io/v1 --api-versions discovery.k8s.io/v1/EndpointSlice --api-versions events.k8s.io/v1 --api-versions events.k8s.io/v1/Event --api-versions flowcontrol.apiserver.k8s.io/v1 --api-versions flowcontrol.apiserver.k8s.io/v1/FlowSchema --api-versions flowcontrol.apiserver.k8s.io/v1/PriorityLevelConfiguration --api-versions flowcontrol.apiserver.k8s.io/v1beta3 --api-versions flowcontrol.apiserver.k8s.io/v1beta3/FlowSchema --api-versions flowcontrol.apiserver.k8s.io/v1beta3/PriorityLevelConfiguration --api-versions helm.cattle.io/v1 --api-versions helm.cattle.io/v1/HelmChart --api-versions helm.cattle.io/v1/HelmChartConfig --api-versions k3s.cattle.io/v1 --api-versions k3s.cattle.io/v1/Addon --api-versions k3s.cattle.io/v1/ETCDSnapshotFile --api-versions networking.k8s.io/v1 --api-versions networking.k8s.io/v1/Ingress --api-versions networking.k8s.io/v1/IngressClass --api-versions networking.k8s.io/v1/NetworkPolicy --api-versions node.k8s.io/v1 --api-versions node.k8s.io/v1/RuntimeClass --api-versions policy/v1 --api-versions policy/v1/PodDisruptionBudget --api-versions rbac.authorization.k8s.io/v1 --api-versions rbac.authorization.k8s.io/v1/ClusterRole --api-versions rbac.authorization.k8s.io/v1/ClusterRoleBinding --api-versions rbac.authorization.k8s.io/v1/Role --api-versions rbac.authorization.k8s.io/v1/RoleBinding --api-versions scheduling.k8s.io/v1 --api-versions scheduling.k8s.io/v1/PriorityClass --api-versions storage.k8s.io/v1 --api-versions storage.k8s.io/v1/CSIDriver --api-versions storage.k8s.io/v1/CSINode --api-versions storage.k8s.io/v1/CSIStorageCapacity --api-versions storage.k8s.io/v1/StorageClass --api-versions storage.k8s.io/v1/VolumeAttachment --api-versions traefik.containo.us/v1alpha1 --api-versions traefik.containo.us/v1alpha1/IngressRoute --api-versions traefik.containo.us/v1alpha1/IngressRouteTCP --api-versions traefik.containo.us/v1alpha1/IngressRouteUDP --api-versions traefik.containo.us/v1alpha1/Middleware --api-versions traefik.containo.us/v1alpha1/MiddlewareTCP --api-versions traefik.containo.us/v1alpha1/ServersTransport --api-versions traefik.containo.us/v1alpha1/TLSOption --api-versions traefik.containo.us/v1alpha1/TLSStore --api-versions traefik.containo.us/v1alpha1/TraefikService --api-versions traefik.io/v1alpha1 --api-versions traefik.io/v1alpha1/IngressRoute --api-versions traefik.io/v1alpha1/IngressRouteTCP --api-versions traefik.io/v1alpha1/IngressRouteUDP --api-versions traefik.io/v1alpha1/Middleware --api-versions traefik.io/v1alpha1/MiddlewareTCP --api-versions traefik.io/v1alpha1/ServersTransport --api-versions traefik.io/v1alpha1/ServersTransportTCP --api-versions traefik.io/v1alpha1/TLSOption --api-versions traefik.io/v1alpha1/TLSStore --api-versions traefik.io/v1alpha1/TraefikService --api-versions v1 --api-versions v1/ConfigMap --api-versions v1/Endpoints --api-versions v1/Event --api-versions v1/LimitRange --api-versions v1/Namespace --api-versions v1/Node --api-versions v1/PersistentVolume --api-versions v1/PersistentVolumeClaim --api-versions v1/Pod --api-versions v1/PodTemplate --api-versions v1/ReplicationController --api-versions v1/ResourceQuota --api-versions v1/Secret --api-versions v1/Service --api-versions v1/ServiceAccount --include-crds` failed exit status 1: Error: template: chatterbox/templates/tests/test-connection.yaml:14:62: executing "chatterbox/templates/tests/test-connection.yaml" at <.Values.service.port>: nil pointer evaluating interface {}.port Use --debug flag to render out invalid YAML
+
+
+awk -v tag='${shaShort}' '/^ *tag:/ {\$0=\"  tag: \\\"\" tag \"\\\"\"} 1' ${projectName}/${appName}/values_${env}.yaml > temp.yaml && mv temp.yaml ${projectName}/${appName}/values_${env}.yaml
+
+cd ${repoDir}
+git config user.name ${gitUser}
+git config user.email ${gitEmail}
+git add ${projectName}/${appName}/values_${env}.yaml
+git commit -m "[auto-commit]| Update application image tag version to ${shaShort} in ${projectName}/${appName} for ${env} environment"
+git pull origin main -r
+git push origin HEAD:main
+
+
+#!/bin/bash
+
+# Variables (replace with your actual values)
+REPO_URL=$1
+CLONE_DIR="app"
+VALUES_FILE="path/to/your/helm-chart/values_${env}.yaml"
+IMAGE_TAG=$2
+COMMIT_MESSAGE="Update image tag to ${IMAGE_TAG}"
+
+# Clone the repository
+git clone "$REPO_URL" "$CLONE_DIR"
+cd "$CLONE_DIR" || exit
+
+# Update the image tag in values.yaml
+yq eval ".image.tag = \"${IMAGE_TAG}\"" -i "$VALUES_FILE"
+
+# Check if the values.yaml has been modified
+if git diff --exit-code "$VALUES_FILE"; then
+  echo "No changes detected in $VALUES_FILE"
+  exit 0
+fi
+
+# Commit and push the changes
+git config user.name "hdfclife-infra"
+git config user.email "hdfclife-infra@hdfclife.com"
+git add "$VALUES_FILE"
+git commit -m "$COMMIT_MESSAGE"
+git push origin main
+
+echo "Image tag updated and pushed successfully."
