@@ -1,12 +1,12 @@
-appName: chatterbox
+appName: samplebox
 
 service: 
   port: 80
 
-namespace: chatterbox
+namespace: samplebox
 
 configmap:
-  name: chatterbox-configmap
+  name: samplebox-configmap
   data:
     CUSTOM_HEADER: 'This app was deployed with helm!'
 
